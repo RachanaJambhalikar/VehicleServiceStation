@@ -18,37 +18,23 @@ public class ServiceStation {
 	public static ServiceStation serviceStation=new ServiceStation();
 	private HashSet<Customer> customers;
 	private LinkedList<Bill> bills;
-	private double  repairingLaborCharges;
-	private double  servicingLaborCharges;
+	
 
     private ServiceStation() {
         customers = new HashSet<>();
         bills = new LinkedList<>();
-        repairingLaborCharges = 100.00;
-        servicingLaborCharges = 150.00;
+       
+    }
+    
+    public void addBill(Bill bill) {
+    	bills.add(bill);
+    }
+
+    public void displayAllBills() {
+    	System.out.println("All bills::\n" + bills);
     }
     
     
-    public double getRepairingLaborCharges() {
-		return repairingLaborCharges;
-	}
-
-
-	public void setRepairingLaborCharges(double repairingLaborCharges) {
-		this.repairingLaborCharges = repairingLaborCharges;
-	}
-
-
-	public double getServicingLaborCharges() {
-		return servicingLaborCharges;
-	}
-
-
-	public void setServicingLaborCharges(double servicingLaborCharges) {
-		this.servicingLaborCharges = servicingLaborCharges;
-	}
-
-
 	public void addCustomer(Customer customer)
     {
     	 File file = new File(FILE_NAME);

@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Scanner;
 
+import com.sunbeam.entitires.Bill;
 import com.sunbeam.entitires.Customer;
+import com.sunbeam.entitires.ServiceRequest;
 import com.sunbeam.entitires.ServiceStation;
 import com.sunbeam.entitires.SparePart;
 import com.sunbeam.entitires.Vehicle;
@@ -27,7 +29,8 @@ public class Menu {
             System.out.println("1. Customer");
             System.out.println("2. Vehicle");
             System.out.println("3. Vehicle Info");
-            System.out.println("4. Service Request");
+            System.out.println("4. Service Station Information");
+            System.out.println("5. Service Requests/ billing information");
             System.out.println("0. Exit\n\n");
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
@@ -51,6 +54,9 @@ public class Menu {
                 vehicleModelMenu(scanner);
                 break;
             case 4:
+            	serviceStation(scanner);
+            	break;
+            case 5:
             	serviceRequest(scanner);
             	break;
             default:
@@ -60,6 +66,41 @@ public class Menu {
 	}
 	
 	public static void serviceRequest(Scanner scanner) {
+		while(true) {
+			System.out.println("1. Create vehicle repairing bill");
+			System.out.println("2. Create vehicle maintenance bill");
+			System.out.println("3. create Engine/Gear oil change bill");
+			System.out.println("4. Display all bills");
+			System.out.println("0. Return to main menu");
+			
+			int choice = scanner.nextInt();
+			if(choice == 0) {
+				break;
+			}
+			
+			switch(choice) {
+			case 1:
+				Bill rbill = ServiceRequest.createRepairingBill(scanner);
+				ServiceStation.serviceStation.addBill(rbill);
+				break;
+			case 2:
+				Bill mbill = ServiceRequest.createMaintenanceBill(scanner);
+				ServiceStation.serviceStation.addBill(mbill);
+				break;
+			case 3:
+				Bill ebill = ServiceRequest.engineOrGearOilBill(scanner);
+				ServiceStation.serviceStation.addBill(ebill);
+				break;
+			case 4:
+				ServiceStation.serviceStation.displayAllBills();
+				break;
+			case 0:
+				break;
+			}
+		}
+	}
+	
+	public static void serviceStation(Scanner scanner) {
 		while(true) {
 		 System.out.println("\n\n\n1. Selec customer from existing list of customers.");
 		 System.out.println("2. Display customer's vehicle details.");
