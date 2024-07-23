@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import com.sunbeam.entitires.Customer;
 import com.sunbeam.entitires.ServiceStation;
+import com.sunbeam.entitires.SparePart;
 import com.sunbeam.entitires.Vehicle;
 import com.sunbeam.entitires.VehicleModel;
 import com.sunbeam.operations.CustomerOperations;
@@ -60,9 +61,11 @@ public class Menu {
 	
 	public static void serviceRequest(Scanner scanner) {
 		while(true) {
-		 System.out.println("1. Selec customer from existing list of customers.");
+		 System.out.println("\n\n\n1. Selec customer from existing list of customers.");
 		 System.out.println("2. Display customer's vehicle details.");
 		 System.out.println("3. Input details of new vehicle and store it for future reference.");
+		 System.out.println("4. writeSparePartsToFile");
+		 System.out.println("5. Load all spare parts");
 		 System.out.println("0. Return to main menu");
 		 
 		 int choice = scanner.nextInt();
@@ -88,6 +91,15 @@ public class Menu {
          	 mobile = scanner.nextInt();
          	 CustomerService.addNewVehicle(CustomerService.selectCustomerByMobile(mobile), scanner);
         	 break;
+         case 4:
+        	 SparePart.writeSparePartsToFile();
+        	 break;
+         case 5:
+         	HashSet<SparePart> parts = ServiceStation.serviceStation.loadSparePartsFromFile();
+         	for(SparePart part : parts){
+         		System.out.println(part);
+         	}
+         	break;
          case 0:
         	 break;
          }

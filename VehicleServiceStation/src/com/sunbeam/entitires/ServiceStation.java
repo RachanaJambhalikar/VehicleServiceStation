@@ -18,13 +18,38 @@ public class ServiceStation {
 	public static ServiceStation serviceStation=new ServiceStation();
 	private HashSet<Customer> customers;
 	private LinkedList<Bill> bills;
+	private double  repairingLaborCharges;
+	private double  servicingLaborCharges;
 
     private ServiceStation() {
         customers = new HashSet<>();
         bills = new LinkedList<>();
+        repairingLaborCharges = 100.00;
+        servicingLaborCharges = 150.00;
     }
     
-    public void addCustomer(Customer customer)
+    
+    public double getRepairingLaborCharges() {
+		return repairingLaborCharges;
+	}
+
+
+	public void setRepairingLaborCharges(double repairingLaborCharges) {
+		this.repairingLaborCharges = repairingLaborCharges;
+	}
+
+
+	public double getServicingLaborCharges() {
+		return servicingLaborCharges;
+	}
+
+
+	public void setServicingLaborCharges(double servicingLaborCharges) {
+		this.servicingLaborCharges = servicingLaborCharges;
+	}
+
+
+	public void addCustomer(Customer customer)
     {
     	 File file = new File(FILE_NAME);
          if (file.exists()) {
@@ -62,6 +87,19 @@ public class ServiceStation {
 		}
 		return null;
 	}
+	
+	public HashSet<SparePart> loadSparePartsFromFile() {
+		try (FileInputStream fileIn = new FileInputStream("SpareParts.bin");
+				ObjectInputStream in = new ObjectInputStream(fileIn)) {
+			
+			HashSet <SparePart> parts = (HashSet <SparePart>) in.readObject();
+			
+			return parts;
+		} catch (IOException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	public HashSet<Customer> getCustomers() {
 		return customers;
@@ -76,6 +114,7 @@ public class ServiceStation {
 	}
     
 	public void writeCustomersToFile(HashSet<Customer> customers ) {
+		
 		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("Customers.bin"))) {
             oos.writeObject(customers);
         } catch (IOException e) {
