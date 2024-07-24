@@ -8,7 +8,6 @@ public class Vehicle {
 	private VehicleModel vehicleModel;
 
 	public Vehicle() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public Vehicle(String vehicleNumber, VehicleModel vehicleModel) {

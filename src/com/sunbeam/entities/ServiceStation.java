@@ -18,7 +18,6 @@ public class ServiceStation {
 		this.customerList = customerList;
 	}
 
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(customerList);

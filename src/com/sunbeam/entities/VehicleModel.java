@@ -6,7 +6,6 @@ public class VehicleModel {
     private String model;
     
     public VehicleModel() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public VehicleModel(int id, String manufacturer, String model) {
