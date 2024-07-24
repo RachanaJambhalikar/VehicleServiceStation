@@ -1,8 +1,10 @@
 package com.sunbeam.entities;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class Customer {
+public class Customer implements Serializable {
+private static final long serialVersionUID = 1L;
 
 	private String name;
 	private String address;
@@ -10,15 +12,14 @@ public class Customer {
 	private HashMap<String, Vehicle> vehicles;
 	
 	public Customer() {
-		
-	}
-	public Customer(String name, String address, String phoneNumber) {
-
+		 vehicles = new HashMap<>();
+	                  }
+	public Customer(String name, String address, String phoneNumber) 
+	{
 		this.name = name;
 		this.address = address;
 		this.phoneNumber = phoneNumber;
         this.vehicles = new HashMap<>();
-
 	}
 	
 	public HashMap<String, Vehicle> getVehicles() {
@@ -48,9 +49,7 @@ public class Customer {
 
 	@Override
 	public String toString() {
-		return "Customer{" + "name='" + name + '\'' + ", address='" + address + '\'' + ", mobileNumber='" + phoneNumber
-				+ '\'' +
-
-				'}';
+		return "Customer{" + "name='" + name + '\'' + ", address='" + address 
+				+ '\'' + ", mobileNumber='" + phoneNumber + '\'' + '}';
 	}
 }

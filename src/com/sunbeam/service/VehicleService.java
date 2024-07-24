@@ -11,13 +11,13 @@ public class VehicleService {
 	{
 		System.out.println("Enter customer mobile:");
 		String mobile = sc.next();
-		Customer c = CustomerService.findCustomerByMobile(mobile);
-	if(c !=null) {	
+		Customer customer = CustomerService.findCustomerByMobile(mobile);
+	if(customer !=null) {	
 		System.out.println("Enter Vehicle Number: ");
 		vehicle.setVehicleNumber(sc.next());
 		System.out.println("Enter Vehicle Model: ");
 		vehicle.setVehicleModel(new VehicleModel(1, "Honda", "activa"));
-		c.getVehicles().put(vehicle.getVehicleNumber(), vehicle);
+		customer.getVehicles().put(vehicle.getVehicleNumber(), vehicle);
 	}
 }
 	
