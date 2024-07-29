@@ -7,11 +7,11 @@ public class Bill
 	private LocalDate date;
 	private String customerName;
 	private String billID;
-	private String serviceRequest;
+	private ServiceRequest serviceRequest;
 	private String paidAmount;
 	private String totalAmount;
 	
-	public Bill(LocalDate date, String customerName, String billID, String serviceRequest, String paidAmount, String totalAmount) {
+	public Bill(LocalDate date, String customerName, String billID, ServiceRequest serviceRequest, String paidAmount, String totalAmount) {
 
 		this.date = date;
 		this.customerName = customerName;
@@ -45,11 +45,11 @@ public class Bill
 		this.billID = billID;
 	}
 
-	public String getserviceRequest() {
+	public ServiceRequest getserviceRequest() {
 		return serviceRequest;
 	}
 
-	public void setserviceRequest(String serviceRequest) {
+	public void setserviceRequest(ServiceRequest serviceRequest) {
 		this.serviceRequest = serviceRequest;
 	}
 

@@ -46,10 +46,9 @@ private static final long serialVersionUID = 1L;
 	public void setAddress(String address) {
 		this.address = address;
 	}
-
 	@Override
 	public String toString() {
-		return "Customer{" + "name='" + name + '\'' + ", address='" + address 
-				+ '\'' + ", mobileNumber='" + phoneNumber + '\'' + '}';
-	}
+		return "Customer [name=" + name + ", address=" + address + ", phoneNumber=" + phoneNumber + ", vehicles="
+				+ vehicles + "]";
+    }
 }

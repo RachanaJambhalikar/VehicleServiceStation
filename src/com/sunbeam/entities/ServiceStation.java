@@ -8,15 +8,15 @@ public class ServiceStation implements Serializable {
     private static final long serialVersionUID = 1L;
 	
 	public static ServiceStation servicestation=new ServiceStation();
-	
 	private HashSet<Customer> customerList;
+	
+	public ServiceStation() {
+        this.customerList = new HashSet<>();
+    }
 
 	public HashSet<Customer> getCustomerList() {
 		return customerList;
 	}
-	public ServiceStation() {
-        customerList = new HashSet<>();
-    }
 
 	public void setCustomerList(HashSet<Customer> customerList) {
 		this.customerList = customerList;

@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Scanner;
 import com.sunbeam.entities.Customer;
@@ -16,11 +17,11 @@ public class CustomerService {
 	private static final String CUSTOMER_FILE = "customers.dat";
 	
     public static void inputCustomer(Customer customer,Scanner sc) {
-    	System.out.println("Enter name ::");
+    	System.out.println("Enter name of customer: ");
     	customer.setName(sc.next());
-    	System.out.println("Enter address ::");
+    	System.out.println("Enter address of customer: ");
     	customer.setAddress(sc.next());
-    	System.out.println("Enter mobile ::");
+    	System.out.println("Enter mobile number of customer: ");
     	customer.setPhoneNumber(sc.next());
     }
     public static void displayAllCustomers() {
@@ -32,21 +33,18 @@ public class CustomerService {
             System.out.println(cust);
         }
     }
+    public static Customer findCustomerByPhoneNumber(String phoneNumber) {
+        for (Customer customer : ServiceStation.servicestation.getCustomerList()) {
+            if (customer.getPhoneNumber().equals(phoneNumber)) {
+                System.out.println("Customer found :" + customer);
 
-    public static void deleteCustomer(String phoneNumber) {
-    	 boolean found = false;
-         for (Customer customer : ServiceStation.servicestation.getCustomerList()) {
-             if (customer.getPhoneNumber().equals(phoneNumber)) {
-                 ServiceStation.servicestation.getCustomerList().remove(customer);
-                 System.out.println("Customer removed successfully.");
-                 found = true;
-                 break;
-             }
-         }
-         if (!found) {
-             System.out.println("Customer not found.");
-         }
-     }
+                return customer;
+            }
+        }
+        System.out.println("Customer not found.");
+        return null; 
+    }
+
     public static void updateCustomer(String phoneNumber, Scanner sc) {
         Customer customerToUpdate = null;
         for (Customer customer : ServiceStation.servicestation.getCustomerList()) {
@@ -62,16 +60,19 @@ public class CustomerService {
             System.out.println("Customer not found.");
         }
     }
-    public static Customer findCustomerByMobile(String mobile) {
+    public static void deleteCustomer(String phoneNumber) {
+   	 boolean found = false;
         for (Customer customer : ServiceStation.servicestation.getCustomerList()) {
-            if (customer.getPhoneNumber().equals(mobile)) {
-                System.out.println("Customer found :" + customer);
-
-                return customer;
+            if (customer.getPhoneNumber().equals(phoneNumber)) {
+                ServiceStation.servicestation.getCustomerList().remove(customer);
+                System.out.println("Customer deleted successfully.");
+                found = true;
+                break;
             }
         }
-        System.out.println("Customer not found.");
-        return null; 
+        if (!found) {
+            System.out.println("Customer not found.");
+        }
     }
 
     public static void saveCustomersToFile() {

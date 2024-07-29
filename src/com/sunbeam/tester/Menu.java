@@ -45,12 +45,27 @@ public class Menu {
 	{
 		System.out.println("----------Service Request Menu----------");
 		System.out.println("0. Exit");
-		System.out.println("1. Add new service request");
-		System.out.println("2. display specific vehicle service requests");
+		System.out.println("1. Select Customer Vehicle");
+	    System.out.println("2. Process Request");
+	    System.out.println("3. Prepare and Display Bill");
+		System.out.println("4. Get Payment Form Customer");
+		System.out.println("5. Oil/Additive Change/Add");
 		System.out.println("Enter your choice: ");
 		return sc.nextInt();	
 		}
-		
+	
+	public static int processRequestMenu(Scanner sc) {
+        System.out.println("----------Process Request Menu----------");
+        System.out.println("1. New Service");
+        System.out.println("2. Existing Service");
+        System.out.println("3. Maintenance");
+        System.out.println("4. Repairing");
+        System.out.println("5. Oil/Additive Change");
+        System.out.println("0. Return to service request menu");
+        System.out.print("Enter your choice: ");
+        return sc.nextInt();
+    }
+
 	public static int partsMenu(Scanner sc)
 		{
 			System.out.println("----------Parts Menu----------");

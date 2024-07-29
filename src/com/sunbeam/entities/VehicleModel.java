@@ -1,6 +1,9 @@
 package com.sunbeam.entities;
 
-public class VehicleModel {
+import java.io.Serializable;
+
+public class VehicleModel implements Serializable {
+    private static final long serialVersionUID = 1L;
 	private int id;
 	private String manufacturer;
     private String model;
@@ -43,5 +46,5 @@ public class VehicleModel {
 	public String toString() {
 		return "VehicleModel [id=" + id + ", manufacturer=" + manufacturer + ", model=" + model + "]";
 	}
-    
+
 }
