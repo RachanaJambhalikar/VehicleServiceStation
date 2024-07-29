@@ -10,7 +10,8 @@ import com.sunbeam.entities.Vehicle;
 import com.sunbeam.entities.VehicleModel;
 
 public class ServiceRequestService {
-
+	
+//Display existing list of customers
     public static void displayAllExistingCustomers() {
         if (ServiceStation.servicestation == null) {
             return;
@@ -23,7 +24,8 @@ public class ServiceRequestService {
             System.out.println(cust);
         }
     }
-
+    
+//Select customer by customer phone number
     public static Customer selectCustomer(Scanner sc) {
         System.out.print("Enter customer mobile: ");
         String phoneNumber = sc.next();
@@ -34,6 +36,7 @@ public class ServiceRequestService {
         return customer;
     }
 
+//Select vehicle or Add new vehicle    
     public static Vehicle selectOrInputNewVehicle(Customer customer, Scanner sc) {
         Map<String, Vehicle> vehicles = customer.getVehicles();
 
@@ -42,7 +45,7 @@ public class ServiceRequestService {
             for (Map.Entry<String, Vehicle> entry : vehicles.entrySet()) {
                 System.out.println(entry.getKey() + ": " + entry.getValue());
             }
-            System.out.print("Enter the vehicle number to select or 'new' to input a new vehicle: ");
+            System.out.print("Enter the vehicle number for a new vehicle: ");
             String input = sc.next();
 
             if (input.equalsIgnoreCase("new")) {
@@ -62,13 +65,12 @@ public class ServiceRequestService {
         }
     }
 
+//Getting details for new vehicle    
     private static Vehicle inputNewVehicle(Scanner sc, Customer customer) {
-        sc.nextLine(); // Clear the buffer
         System.out.print("Enter vehicle number: ");
         String vehicleNumber = sc.nextLine();
         System.out.print("Enter vehicle model ID: ");
         int modelId = sc.nextInt();
-        sc.nextLine(); // Clear the buffer
         System.out.print("Enter vehicle manufacturer: ");
         String manufacturer = sc.nextLine();
         System.out.print("Enter vehicle model name: ");
@@ -81,6 +83,7 @@ public class ServiceRequestService {
         return vehicle;
     }
 
+    
     public static void inputServiceRequest(ServiceRequest serviceRequest, Scanner sc) {
         displayAllExistingCustomers();
         Customer customer = selectCustomer(sc);
@@ -100,7 +103,6 @@ public class ServiceRequestService {
         serviceRequest.setVehicle(vehicle);
         serviceRequest.setServiceDate(new Date());
 
-        System.out.println("Service Request created successfully:");
-        System.out.println(serviceRequest);
+        System.out.println("Service Request created successfully:" + serviceRequest);
     }
 }

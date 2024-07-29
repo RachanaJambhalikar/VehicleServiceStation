@@ -48,7 +48,7 @@ private static final long serialVersionUID = 1L;
 	}
 	@Override
 	public String toString() {
-		return "Customer [name=" + name + ", address=" + address + ", phoneNumber=" + phoneNumber + ", vehicles="
+		return "Customer [name:" + name + ", address:" + address + ", phoneNumber:" + phoneNumber + "\n" + "vehicles:"
 				+ vehicles + "]";
     }
 }

@@ -113,7 +113,6 @@ public class Main {
         int choice = 0;
 
         if (ServiceStation.servicestation == null) {
-            System.out.println("Service Station is not initialized.");
             return;
         }
 
@@ -128,6 +127,7 @@ public class Main {
                 	Vehicle vehicle = new Vehicle();
                 	VehicleService.inputVehicle(vehicle, sc);
                 	 System.out.println("Customer added successfully.");
+                	 CustomerService.saveCustomersToFile();
                     break;
                 case 2:
                     System.out.println("Displaying all vehicles...");
@@ -137,11 +137,13 @@ public class Main {
                 	System.out.print("Enter vehicle number of customer to edit: ");
                     String vehicleNumberToEdit = sc.next();
                     VehicleService.editVehicle(vehicleNumberToEdit, sc);
+                    CustomerService.saveCustomersToFile();
                     break;
                 case 4:
                 	System.out.print("Enter vehicle number of customer to delete: ");
                     String vehicleNumberToDelete = sc.next();
                     VehicleService.deleteVehicle(vehicleNumberToDelete);
+                    CustomerService.saveCustomersToFile();
                     break;
                 case 5:
                 	System.out.print("Enter vehicle number of customer to display: ");
@@ -158,6 +160,9 @@ public class Main {
 	private static void serviceRequestMenu(Scanner sc) {
         int choice = 0;        
         ServiceRequest serviceRequest = new ServiceRequest();
+        if (ServiceStation.servicestation == null) {
+            return;
+        }
         do {
             choice = Menu.serviceRequestMenu(sc);
 
@@ -170,23 +175,22 @@ public class Main {
                 	ServiceRequestService.inputServiceRequest(serviceRequest, sc);
                     break;
 
-                case 2:
-                    System.out.println("Process service request...");
-                    
+                case 2:         
+                	processRequestMenu(sc);              	
                     break;
 
                 case 3:
-                    System.out.println("Prepare and display bill...");
+                    System.out.println("Prepare and display bill: ");
                     
                     break;
 
                 case 4:
-                    System.out.println("Get payment from customer...");
+                    System.out.println("Get payment from customer: ");
                     
                     break;
 
                 case 5:
-                    System.out.println("Oil/Additive change...");
+                    System.out.println("Oil/Additive change: ");
 
                     break;
 
@@ -197,6 +201,8 @@ public class Main {
             }
         } while (choice != 0);
     }
+	
+	//SubMenu for Service request Menu
 	private static void processRequestMenu(Scanner sc) {
         int choice;
         do {
@@ -225,6 +231,7 @@ public class Main {
             }
         } while (choice != 0);
     }
+	
 	private static void givenDateBusinessMenu(Scanner sc) {
 		// TODO Auto-generated method stub
 		

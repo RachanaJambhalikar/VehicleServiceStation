@@ -36,6 +36,6 @@ public class Vehicle implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Vehicle [vehicleNumber=" + vehicleNumber + ", vehicleModel=" + vehicleModel + "]";
+		return "[vehicleNumber:" + vehicleNumber + ", vehicleModel:" + vehicleModel + "]";
 	}
 }
