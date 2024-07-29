@@ -9,31 +9,33 @@ import java.util.HashSet;
 import java.util.Scanner;
 
 public class VehicleService {
-    private static final String VEHICLE_FILE = "vehicles.dat";
-
+	
     public static void inputVehicle(Vehicle vehicle, Scanner sc) {
- 
-        System.out.println("Enter customer mobile:");
+        System.out.println("Enter Vehicle Number: ");
+        vehicle.setVehicleNumber(sc.next());
+        System.out.println("Enter Vehicle Model ID: ");
+        int modelId = sc.nextInt();
+        System.out.println("Enter Vehicle Manufacturer: ");
+        String manufacturer = sc.next();
+        System.out.println("Enter Vehicle Model Name: ");
+        String modelName = sc.next();
+        VehicleModel vehicleModel = new VehicleModel(modelId, manufacturer, modelName);
+        vehicle.setVehicleModel(vehicleModel);
+    }
+    
+    public static void addVehicleToCustomer(Customer customer, Vehicle vehicle) {
+        customer.getVehicles().put(vehicle.getVehicleNumber(), vehicle);
+        System.out.println("Vehicle added successfully.");
+    }
+
+    public static Customer selectCustomer(Scanner sc) {
+        System.out.print("Enter customer mobile: ");
         String phoneNumber = sc.next();
         Customer customer = CustomerService.findCustomerByPhoneNumber(phoneNumber);
-        
-        if (customer != null) {
-            System.out.println("Enter Vehicle Number: ");
-            vehicle.setVehicleNumber(sc.next());
-            System.out.println("Enter Vehicle Model ID: ");
-            int modelId = sc.nextInt();
-            System.out.println("Enter Vehicle Manufacturer: ");
-            String manufacturer = sc.next();
-            System.out.println("Enter Vehicle Model Name: ");
-            String modelName = sc.next();
-            VehicleModel vehicleModel = new VehicleModel(modelId, manufacturer, modelName);
-            vehicle.setVehicleModel(vehicleModel);
-
-            customer.getVehicles().put(vehicle.getVehicleNumber(), vehicle);
-            System.out.println("Vehicle added successfully.");
-        } else {
+        if (customer == null) {
             System.out.println("Customer not found.");
         }
+        return customer;
     }
     
     public static void displayAllVehicles() {
@@ -94,28 +96,13 @@ public class VehicleService {
         boolean found = false;
         for (Customer customer : ServiceStation.servicestation.getCustomerList()) {
             if (customer.getVehicles().remove(vehicleNumber) != null) {
-                System.out.println("Vehicle removed successfully.");
+                System.out.println("Vehicle deleted successfully.");
                 found = true;
                 break;
             }
         }
         if (!found) {
             System.out.println("Vehicle not found.");
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    public static void loadVehiclesFromFile() {
-        File file = new File(VEHICLE_FILE);
-        if (!file.exists()) {
-            System.out.println("No existing vehicle file found.");
-            return;
-        }
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
-            HashSet<Customer> loadedCustomers = (HashSet<Customer>) ois.readObject();
-            ServiceStation.servicestation.setCustomerList(loadedCustomers);
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
         }
     }
 }

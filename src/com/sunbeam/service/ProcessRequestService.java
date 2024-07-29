@@ -1,21 +1,24 @@
 package com.sunbeam.service;
 
 import java.util.Scanner;
+import com.sunbeam.entities.ServiceRequest;
+import com.sunbeam.entities.ServiceStation;
 
 public class ProcessRequestService {
-
-	public static void newService(Scanner sc) {
-		
-		
-	}
+	
+	
 
 	public static void existingService(Scanner sc) {
-		// TODO Auto-generated method stub
-		
-	}
-
+		if (ServiceStation.servicestation == null) {
+            return;
+        }
+        for (ServiceRequest serviceRequsets : ServiceStation.servicestation.getServiceRequests()) {
+            System.out.println(serviceRequsets);
+        }
+    }
+	
 	public static void maintenance(Scanner sc) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 

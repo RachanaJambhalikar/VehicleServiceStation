@@ -72,6 +72,7 @@ public class Main {
 	                case 1:
 	                	System.out.println("Enter details for adding customer ");
 	                    Customer customer = new Customer();
+	                    CustomerService.inputCustomerMobile(customer,sc);
 	                    CustomerService.inputCustomer(customer, sc);
 	                    ServiceStation.servicestation.getCustomerList().add(customer);
 	                    CustomerService.saveCustomersToFile();
@@ -124,31 +125,33 @@ public class Main {
                     System.out.println("Returning to main menu...");
                     break;
                 case 1:
-                	Vehicle vehicle = new Vehicle();
-                	VehicleService.inputVehicle(vehicle, sc);
-                	 System.out.println("Customer added successfully.");
-                	 CustomerService.saveCustomersToFile();
+                	Customer customer = VehicleService.selectCustomer(sc);
+                	if (customer != null) {
+                        Vehicle vehicle = new Vehicle();
+                        VehicleService.inputVehicle(vehicle, sc);
+                        VehicleService.addVehicleToCustomer(customer, vehicle);
+                        CustomerService.saveCustomersToFile(); 
+                    } 
                     break;
                 case 2:
                     System.out.println("Displaying all vehicles...");
                     VehicleService.displayAllVehicles();
                     break;
                 case 3:
-                	System.out.print("Enter vehicle number of customer to edit: ");
-                    String vehicleNumberToEdit = sc.next();
-                    VehicleService.editVehicle(vehicleNumberToEdit, sc);
-                    CustomerService.saveCustomersToFile();
-                    break;
-                case 4:
-                	System.out.print("Enter vehicle number of customer to delete: ");
-                    String vehicleNumberToDelete = sc.next();
-                    VehicleService.deleteVehicle(vehicleNumberToDelete);
-                    CustomerService.saveCustomersToFile();
-                    break;
-                case 5:
                 	System.out.print("Enter vehicle number of customer to display: ");
                     String vehicleNumberToDisplay = sc.next();
                     VehicleService.findVehicleByVNumber(vehicleNumberToDisplay);
+                    break;
+                case 4:System.out.print("Enter vehicle number of customer to edit: ");
+                    String vehicleNumberToEdit = sc.next();
+                    VehicleService.editVehicle(vehicleNumberToEdit, sc);
+                    CustomerService.saveCustomersToFile();  
+                    break;
+                case 5:
+                	System.out.print("Enter vehicle number of customer to delete: ");
+                    String vehicleNumberToDelete = sc.next();
+                    VehicleService.deleteVehicle(vehicleNumberToDelete);
+                    CustomerService.saveCustomersToFile(); 
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
@@ -159,10 +162,9 @@ public class Main {
 		
 	private static void serviceRequestMenu(Scanner sc) {
         int choice = 0;        
-        ServiceRequest serviceRequest = new ServiceRequest();
-        if (ServiceStation.servicestation == null) {
-            return;
-        }
+        ServiceRequest serviceRequest =null;
+        Customer customer=null;
+        Vehicle veh=null;
         do {
             choice = Menu.serviceRequestMenu(sc);
 
@@ -172,11 +174,15 @@ public class Main {
                     break;
 
                 case 1:
-                	ServiceRequestService.inputServiceRequest(serviceRequest, sc);
+                	CustomerService.displayAllCustomers();
+                	customer =ServiceRequestService.selectCustomer(sc);
+                	veh=ServiceRequestService.selectOrInputNewVehicle(customer, sc);
+                	
+                
                     break;
 
                 case 2:         
-                	processRequestMenu(sc);              	
+                	processRequestMenu(customer,veh,sc);              	
                     break;
 
                 case 3:
@@ -203,8 +209,9 @@ public class Main {
     }
 	
 	//SubMenu for Service request Menu
-	private static void processRequestMenu(Scanner sc) {
+	private static void processRequestMenu(Customer cust,Vehicle veh,Scanner sc) {
         int choice;
+        ServiceRequest serviceRequest =null;
         do {
             choice = Menu.processRequestMenu(sc);
             switch (choice) {
@@ -212,7 +219,11 @@ public class Main {
                     System.out.println("Returning to service request menu...");
                     break;
                 case 1:
-                	ProcessRequestService.newService(sc);
+                	if(serviceRequest==null)
+                	{
+                		serviceRequest=new ServiceRequest(1,cust,veh);
+                		ServiceStation.servicestation.getServiceRequests().add(serviceRequest);
+                	}
                     break;
                 case 2:
                 	ProcessRequestService.existingService(sc);

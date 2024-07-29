@@ -6,7 +6,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Scanner;
 import com.sunbeam.entities.Customer;
@@ -16,13 +15,16 @@ import com.sunbeam.entities.ServiceStation;
 public class CustomerService {
 	private static final String CUSTOMER_FILE = "customers.dat";
 	
+	public static void inputCustomerMobile(Customer customer,Scanner sc) {
+    	System.out.println("Enter mobile number of customer: ");
+    	customer.setPhoneNumber(sc.next());
+	}
+	
     public static void inputCustomer(Customer customer,Scanner sc) {
     	System.out.println("Enter name of customer: ");
     	customer.setName(sc.next());
     	System.out.println("Enter address of customer: ");
     	customer.setAddress(sc.next());
-    	System.out.println("Enter mobile number of customer: ");
-    	customer.setPhoneNumber(sc.next());
     }
     public static void displayAllCustomers() {
         if (ServiceStation.servicestation == null) {
