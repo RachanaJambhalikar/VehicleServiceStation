@@ -10,7 +10,7 @@ public class ServiceRequestService {
     public static Customer selectCustomer(Scanner sc) {
         System.out.print("Enter customer mobile: ");
         String phoneNumber = sc.next();
-        Customer customer = CustomerService.findCustomerByPhoneNumber(phoneNumber);
+        Customer customer = CustomerService.findCustomerByMobileNumber(phoneNumber);
         if (customer == null) {
             System.out.println("Customer not found.");
         }

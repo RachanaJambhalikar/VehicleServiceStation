@@ -1,6 +1,5 @@
 package com.sunbeam.tester;
 
-import java.util.HashSet;
 import java.util.Scanner;
 import com.sunbeam.entities.Customer;
 import com.sunbeam.entities.ServiceRequest;
@@ -9,24 +8,18 @@ import com.sunbeam.entities.Vehicle;
 import com.sunbeam.service.CustomerService;
 import com.sunbeam.service.ProcessRequestService;
 import com.sunbeam.service.ServiceRequestService;
-import com.sunbeam.service.VehicleService;
 
 public class Main {
 
 	public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        if (ServiceStation.servicestation == null) {
-            ServiceStation.servicestation = new ServiceStation();
-            ServiceStation.servicestation.setCustomerList(new HashSet<>());
-        }
-        CustomerService.loadCustomersFromFile();
+       
 	      int choice;
 	        do {
 	            choice = Menu.displayMainMenu(sc);
 	            switch (choice) {
 	                case 0:
 	                    System.out.println("Exiting the application...");
-	                    CustomerService.saveCustomersToFile();
 	                    break;
 	                case 1:
 	                	customerMenu(sc);
@@ -56,11 +49,6 @@ public class Main {
 	private static void customerMenu(Scanner sc) {
 	        int choice = 0;
 
-	        if (ServiceStation.servicestation == null) {
-	            System.out.println("Service Station is not initialized.");
-	            return;
-	        }
-
 	        do {
 	            choice = Menu.customerMenu(sc);
 
@@ -72,10 +60,9 @@ public class Main {
 	                case 1:
 	                	System.out.println("Enter details for adding customer ");
 	                    Customer customer = new Customer();
-	                    CustomerService.inputCustomerMobile(customer,sc);
-	                    CustomerService.inputCustomer(customer, sc);
+	                    CustomerService.inputMobileNumber(customer,sc);
+	                    CustomerService.inputCustomerDetails(customer, sc);
 	                    ServiceStation.servicestation.getCustomerList().add(customer);
-	                    CustomerService.saveCustomersToFile();
 	                    System.out.println("Customer added successfully.");
 	                    break;
 
@@ -87,21 +74,19 @@ public class Main {
 	                case 3:
 	                    System.out.print("Enter phone number of customer to display: ");
 	                    String mobileNumberToDisplay = sc.next();
-	                    CustomerService.findCustomerByPhoneNumber(mobileNumberToDisplay);
+	                    CustomerService.findCustomerByMobileNumber(mobileNumberToDisplay);
 	                    break;
 
 	                case 4:
 	                	System.out.print("Enter phone number of customer to edit: ");
 	                    String mobileNumberToEdit = sc.next();
-	                    CustomerService.updateCustomer(mobileNumberToEdit, sc);
-	                    CustomerService.saveCustomersToFile(); 
+	                    CustomerService.editCustomer(mobileNumberToEdit, sc);
 	                    break;
 
 	                case 5:
 	                	System.out.print("Enter phone number of customer to delete: ");
 	                    String mobileNumberToDelete = sc.next();
 	                    CustomerService.deleteCustomer(mobileNumberToDelete);
-	                    CustomerService.saveCustomersToFile(); 
 	                    break;
 
 	                default:
@@ -125,33 +110,22 @@ public class Main {
                     System.out.println("Returning to main menu...");
                     break;
                 case 1:
-                	Customer customer = VehicleService.selectCustomer(sc);
-                	if (customer != null) {
-                        Vehicle vehicle = new Vehicle();
-                        VehicleService.inputVehicle(vehicle, sc);
-                        VehicleService.addVehicleToCustomer(customer, vehicle);
-                        CustomerService.saveCustomersToFile(); 
-                    } 
+                	
                     break;
                 case 2:
                     System.out.println("Displaying all vehicles...");
-                    VehicleService.displayAllVehicles();
+                    
                     break;
                 case 3:
                 	System.out.print("Enter vehicle number of customer to display: ");
-                    String vehicleNumberToDisplay = sc.next();
-                    VehicleService.findVehicleByVNumber(vehicleNumberToDisplay);
+                    
                     break;
                 case 4:System.out.print("Enter vehicle number of customer to edit: ");
-                    String vehicleNumberToEdit = sc.next();
-                    VehicleService.editVehicle(vehicleNumberToEdit, sc);
-                    CustomerService.saveCustomersToFile();  
+                    
                     break;
                 case 5:
                 	System.out.print("Enter vehicle number of customer to delete: ");
-                    String vehicleNumberToDelete = sc.next();
-                    VehicleService.deleteVehicle(vehicleNumberToDelete);
-                    CustomerService.saveCustomersToFile(); 
+                    
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
@@ -164,7 +138,7 @@ public class Main {
         int choice = 0;        
         ServiceRequest serviceRequest =null;
         Customer customer=null;
-        Vehicle veh=null;
+        Vehicle vehicle=null;
         do {
             choice = Menu.serviceRequestMenu(sc);
 
@@ -176,13 +150,13 @@ public class Main {
                 case 1:
                 	CustomerService.displayAllCustomers();
                 	customer =ServiceRequestService.selectCustomer(sc);
-                	veh=ServiceRequestService.selectOrInputNewVehicle(customer, sc);
+                	vehicle=ServiceRequestService.selectOrInputNewVehicle(customer, sc);
                 	
                 
                     break;
 
                 case 2:         
-                	processRequestMenu(customer,veh,sc);              	
+                	processRequestMenu(customer,vehicle,sc);              	
                     break;
 
                 case 3:
@@ -193,11 +167,6 @@ public class Main {
                 case 4:
                     System.out.println("Get payment from customer: ");
                     
-                    break;
-
-                case 5:
-                    System.out.println("Oil/Additive change: ");
-
                     break;
 
                 default:
@@ -243,7 +212,7 @@ public class Main {
         } while (choice != 0);
     }
 	
-	private static void givenDateBusinessMenu(Scanner sc) {
+	private static void partsMenu(Scanner sc) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -251,11 +220,11 @@ public class Main {
 	private static void todaysBusinessMenu(Scanner sc) {
 		// TODO Auto-generated method stub
 		
-	}
-
-	private static void partsMenu(Scanner sc) {
+	}	
+	private static void givenDateBusinessMenu(Scanner sc) {
 		// TODO Auto-generated method stub
 		
 	}
+
 
 }

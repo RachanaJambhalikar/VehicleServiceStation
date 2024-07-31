@@ -1,16 +1,15 @@
 package com.sunbeam.entities;
 
-import java.io.Serializable;
 import java.util.Objects;
 
-public class Vehicle implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class Vehicle{
+
 	private String vehicleNumber;
 	private VehicleModel vehicleModel;
 
 	public Vehicle() {
 	}
-
+	
 	public Vehicle(String vehicleNumber, VehicleModel vehicleModel) {
 		super();
 		this.vehicleNumber = vehicleNumber;
@@ -23,7 +22,6 @@ public class Vehicle implements Serializable {
 
 	public void setVehicleNumber(String vehicleNumber) {
 		this.vehicleNumber = vehicleNumber;
-
 	}
 
 	public VehicleModel getVehicleModel() {
@@ -34,6 +32,23 @@ public class Vehicle implements Serializable {
 		this.vehicleModel = vehicleModel;
 	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(vehicleNumber);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Vehicle other = (Vehicle) obj;
+		return Objects.equals(vehicleNumber, other.vehicleNumber);
+	}
+	
 	@Override
 	public String toString() {
 		return "[vehicleNumber:" + vehicleNumber + ", vehicleModel:" + vehicleModel + "]";

@@ -1,9 +1,7 @@
 package com.sunbeam.entities;
 
-import java.io.Serializable;
+public class VehicleModel{
 
-public class VehicleModel implements Serializable {
-    private static final long serialVersionUID = 1L;
 	private int id;
 	private String manufacturer;
     private String model;

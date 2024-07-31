@@ -10,7 +10,7 @@ public class Menu {
 		System.out.println("1. Customer");
 		System.out.println("2. Vehicle");
 		System.out.println("3. Service Request");
-		System.out.println("4. Parts");
+		System.out.println("4. SpareParts");
 		System.out.println("5. Today's Business");
 		System.out.println("6. Given Date's Business");
         System.out.print("Enter your choice: ");
@@ -19,7 +19,7 @@ public class Menu {
 	public static int customerMenu(Scanner sc)
 	{
 		System.out.println("----------Customer Menu----------");
-		System.out.println("0. Exit");
+		System.out.println("0. Return to main menu");
 		System.out.println("1. Add customer");
 		System.out.println("2. display all customers");
 		System.out.println("3. display specific customer");
@@ -31,7 +31,7 @@ public class Menu {
 	public static int vehicleMenu(Scanner sc)
 	{
 		System.out.println("----------Vehicle Menu----------");
-		System.out.println("0. Exit");
+		System.out.println("0. Return to main menu");
 		System.out.println("1. Add vehicle");
 		System.out.println("2. display all vehicles");
 		System.out.println("3. display specific vehicle");
@@ -44,24 +44,24 @@ public class Menu {
 	public static int serviceRequestMenu(Scanner sc)
 	{
 		System.out.println("----------Service Request Menu----------");
-		System.out.println("0. Exit");
+		System.out.println("0. Return to main menu");
 		System.out.println("1. Select Customer Vehicle");
 	    System.out.println("2. Process Request");
 	    System.out.println("3. Prepare and Display Bill");
-		System.out.println("4. Get Payment Form Customer");
-		System.out.println("5. Oil/Additive Change/Add");
+	    System.out.println("4. Get payment from customer");
 		System.out.println("Enter your choice: ");
 		return sc.nextInt();	
 		}
 	
+	//SubMenu of Service Request Menu
 	public static int processRequestMenu(Scanner sc) {
         System.out.println("----------Process Request Menu----------");
+        System.out.println("0. Return to service request menu");
         System.out.println("1. New Service");
         System.out.println("2. Existing Service");
         System.out.println("3. Maintenance");
         System.out.println("4. Repairing");
         System.out.println("5. Oil/Additive Change");
-        System.out.println("0. Return to service request menu");
         System.out.print("Enter your choice: ");
         return sc.nextInt();
     }
@@ -69,7 +69,7 @@ public class Menu {
 	public static int partsMenu(Scanner sc)
 		{
 			System.out.println("----------Parts Menu----------");
-			System.out.println("0. Exit");
+			System.out.println("0. Return to main menu");
 			System.out.println("1. Add new part");
 			System.out.println("3. Display all parts");
 			System.out.println("4. Edit part price");
@@ -80,7 +80,7 @@ public class Menu {
 	public static int TodaysbusinessMenu(Scanner sc)
 	{
 		System.out.println("----------Today's Business Menu----------");
-		System.out.println("0. Exit");
+		System.out.println("0. Return to main menu");
 
 		System.out.println("Enter your choice: ");
 		return sc.nextInt();	
@@ -88,7 +88,7 @@ public class Menu {
 	public static int givendatesusinessMenu(Scanner sc)
 	{
 		System.out.println("----------Given Date's Business Menu----------");
-		System.out.println("0. Exit");
+		System.out.println("0. Return to main menu");
 
 		System.out.println("Enter your choice: ");
 		return sc.nextInt();	

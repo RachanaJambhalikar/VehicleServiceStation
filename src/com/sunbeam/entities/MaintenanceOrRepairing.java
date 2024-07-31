@@ -5,7 +5,7 @@ import java.util.LinkedList;
 public class MaintenanceOrRepairing {
 
 	private double laborCharges;
-	private LinkedList<SparePart> partlist;
+	private static LinkedList<SparePart> partlist;
 	
 	public MaintenanceOrRepairing() {
 		this.setLaborCharges(0);
@@ -19,7 +19,7 @@ public class MaintenanceOrRepairing {
 	public void setLaborCharges(double laborCharges) {
 		this.laborCharges = laborCharges;
 	}
-	public LinkedList<SparePart> getPartlist() {
+	public static LinkedList<SparePart> getPartlist() {
 		return partlist;
 	}
 

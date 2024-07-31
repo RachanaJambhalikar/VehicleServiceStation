@@ -4,104 +4,79 @@ import com.sunbeam.entities.Customer;
 import com.sunbeam.entities.ServiceStation;
 import com.sunbeam.entities.Vehicle;
 import com.sunbeam.entities.VehicleModel;
-import java.io.*;
 import java.util.HashSet;
 import java.util.Scanner;
 
 public class VehicleService {
 	
     public static void inputVehicle(Vehicle vehicle, Scanner sc) {
+    	
         System.out.println("Enter Vehicle Number: ");
         vehicle.setVehicleNumber(sc.next());
-        System.out.println("Enter Vehicle Model ID: ");
-        int modelId = sc.nextInt();
-        System.out.println("Enter Vehicle Manufacturer: ");
-        String manufacturer = sc.next();
-        System.out.println("Enter Vehicle Model Name: ");
-        String modelName = sc.next();
-        VehicleModel vehicleModel = new VehicleModel(modelId, manufacturer, modelName);
-        vehicle.setVehicleModel(vehicleModel);
-    }
-    
-    public static void addVehicleToCustomer(Customer customer, Vehicle vehicle) {
-        customer.getVehicles().put(vehicle.getVehicleNumber(), vehicle);
-        System.out.println("Vehicle added successfully.");
-    }
-
-    public static Customer selectCustomer(Scanner sc) {
-        System.out.print("Enter customer mobile: ");
-        String phoneNumber = sc.next();
-        Customer customer = CustomerService.findCustomerByPhoneNumber(phoneNumber);
-        if (customer == null) {
-            System.out.println("Customer not found.");
+  
+        System.out.println("Select Vehicle model and manufacturer: ");
+        HashSet<VehicleModel>vehicleModels=ServiceStation.servicestation.getVehicleModelsList();
+        for(VehicleModel vehicleModel:vehicleModels) 
+        {
+        	System.out.println(vehicleModel);
         }
-        return customer;
+        
+        VehicleModel[] vehicleModel = vehicleModels.toArray(new VehicleModel[vehicleModels.size()]);
+      for(VehicleModel vm1: vehicleModel)
+    	  System.out.println(vm1);
+      vehicle.setVehicleModel(vehicleModel[sc.nextInt()-1]);
     }
     
-    public static void displayAllVehicles() {
-        for (Customer cust : ServiceStation.servicestation.getCustomerList()) {
-            System.out.println("Customer: " + cust.getName());
-            for (Vehicle vehicle : cust.getVehicles().values()) {
+    public static void addVehicleToCustomer(String mobileNumber, Vehicle vehicle, Scanner sc) {
+      CustomerService customerService = new CustomerService();
+      Customer customer=customerService.findCustomerByMobileNumber(mobileNumber);
+      
+      System.out.println("Enter Vehicle number: ");
+      vehicle.setVehicleNumber(sc.next());
+      
+      
+      
+      
+      
+      
+      
+      
+    }
+      
+    public static void displayAllVehicles(Customer customer) {
+        if (customer != null) {
+            HashSet<Vehicle> vehicles = new HashSet<>(customer.getVehicles().values());
+            for (Vehicle vehicle : vehicles) {
                 System.out.println(vehicle);
             }
+        } else {
+            System.out.println("No vehicles found.");
         }
     }
 
-    public static Vehicle findVehicleByVNumber(String vehicleNumber) {
-        for (Customer customer : ServiceStation.servicestation.getCustomerList()) {
-            Vehicle vehicle = customer.getVehicles().get(vehicleNumber);
-            if (vehicle != null) {
-                System.out.println("Vehicle found: " + vehicle);
-                return vehicle;
-            }
+    public static Vehicle findVehicleByVNumber(Customer customer, String vehicleNumber) {
+        if (customer != null) {
+            return customer.getVehicles().get(vehicleNumber);
         }
-        System.out.println("Vehicle not found.");
         return null;
     }
 
-    public static void saveVehiclesToFile() {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(VEHICLE_FILE))) {
-            oos.writeObject(ServiceStation.servicestation.getCustomerList());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    public static void editVehicle(String vehicleNumber, Scanner sc) {
-        boolean found = false;
-        for (Customer customer : ServiceStation.servicestation.getCustomerList()) {
-            Vehicle vehicleToEdit = customer.getVehicles().get(vehicleNumber);
-            if (vehicleToEdit != null) {
-                System.out.print("Enter new Vehicle Number: ");
-                String newVehicleNumber = sc.next();
-                vehicleToEdit.setVehicleNumber(newVehicleNumber);
-                System.out.print("Enter new Vehicle Model ID: ");
-                int modelId = sc.nextInt();
-                System.out.print("Enter new Vehicle Manufacturer: ");
-                String manufacturer = sc.next();
-                System.out.print("Enter new Vehicle Model Name: ");
-                String modelName = sc.next();
-                VehicleModel newModel = new VehicleModel(modelId, manufacturer, modelName);
-                vehicleToEdit.setVehicleModel(newModel);
-
-                System.out.println("Vehicle updated successfully.");
-                found = true;
-                break;
-            }
-        }
-        if (!found) {
+    public static void editVehicle(Customer customer, String vehicleNumber, Scanner sc) {
+        Vehicle vehicle = findVehicleByVNumber(customer, vehicleNumber);
+        if (vehicle != null) {
+            System.out.println("Editing vehicle: " + vehicle);
+            inputVehicle(vehicle, sc);
+            customer.getVehicles().put(vehicleNumber, vehicle);
+            System.out.println("Vehicle updated successfully.");
+        } else {
             System.out.println("Vehicle not found.");
         }
     }
-    public static void deleteVehicle(String vehicleNumber) {
-        boolean found = false;
-        for (Customer customer : ServiceStation.servicestation.getCustomerList()) {
-            if (customer.getVehicles().remove(vehicleNumber) != null) {
-                System.out.println("Vehicle deleted successfully.");
-                found = true;
-                break;
-            }
-        }
-        if (!found) {
+
+    public static void deleteVehicle(Customer customer, String vehicleNumber) {
+        if (customer != null && customer.getVehicles().remove(vehicleNumber) != null) {
+            System.out.println("Vehicle removed successfully.");
+        } else {
             System.out.println("Vehicle not found.");
         }
     }
