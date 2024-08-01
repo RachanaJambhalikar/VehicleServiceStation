@@ -1,5 +1,6 @@
 package com.sunbeam.tester;
 
+import java.util.Collection;
 import java.util.Scanner;
 import com.sunbeam.entities.Customer;
 import com.sunbeam.entities.ServiceRequest;
@@ -8,12 +9,15 @@ import com.sunbeam.entities.Vehicle;
 import com.sunbeam.service.CustomerService;
 import com.sunbeam.service.ProcessRequestService;
 import com.sunbeam.service.ServiceRequestService;
+import com.sunbeam.service.SparePartService;
+import com.sunbeam.service.VehicleService;
 
 public class Main {
-
+	
+	 private static final Scanner sc = new Scanner(System.in);
+	
 	public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-       
+               
 	      int choice;
 	        do {
 	            choice = Menu.displayMainMenu(sc);
@@ -47,6 +51,7 @@ public class Main {
 	}
 
 	private static void customerMenu(Scanner sc) {
+
 	        int choice = 0;
 
 	        do {
@@ -58,7 +63,7 @@ public class Main {
 	                    break;
 
 	                case 1:
-	                	System.out.println("Enter details for adding customer ");
+	                	System.out.println("Enter customer mobile number: ");
 	                    Customer customer = new Customer();
 	                    CustomerService.inputMobileNumber(customer,sc);
 	                    CustomerService.inputCustomerDetails(customer, sc);
@@ -94,6 +99,7 @@ public class Main {
 	                    break;
 	            }
 	        } while (choice != 0);
+
 	    }
 	private static void vehicleMenu(Scanner sc) {
         int choice = 0;
@@ -110,15 +116,16 @@ public class Main {
                     System.out.println("Returning to main menu...");
                     break;
                 case 1:
-                	
+                	System.out.println("Enter the customer mobile number: ");
+                    String mobile = sc.next();
+                    Vehicle vehicle = new Vehicle();
+                    VehicleService.inputVehicle(vehicle, sc);
+                    VehicleService.addVehicle(mobile, vehicle, sc);
                     break;
                 case 2:
-                    System.out.println("Displaying all vehicles...");
-                    
                     break;
                 case 3:
-                	System.out.print("Enter vehicle number of customer to display: ");
-                    
+                	System.out.print("Enter mobile number of customer: ");
                     break;
                 case 4:System.out.print("Enter vehicle number of customer to edit: ");
                     
@@ -132,9 +139,11 @@ public class Main {
                     break;
             }
         } while (choice != 0);
+
     }
 		
 	private static void serviceRequestMenu(Scanner sc) {
+
         int choice = 0;        
         ServiceRequest serviceRequest =null;
         Customer customer=null;
@@ -148,7 +157,6 @@ public class Main {
                     break;
 
                 case 1:
-                	CustomerService.displayAllCustomers();
                 	customer =ServiceRequestService.selectCustomer(sc);
                 	vehicle=ServiceRequestService.selectOrInputNewVehicle(customer, sc);
                 	
@@ -175,6 +183,7 @@ public class Main {
                     break;
             }
         } while (choice != 0);
+
     }
 	
 	//SubMenu for Service request Menu
@@ -213,9 +222,41 @@ public class Main {
     }
 	
 	private static void partsMenu(Scanner sc) {
-		// TODO Auto-generated method stub
-		
-	}
+		int choice = 0;
+
+        if (ServiceStation.servicestation == null) {
+            return;
+        }
+
+        do {
+        	choice = Menu.partsMenu(sc);           
+            
+            switch (choice) {
+                case 0:
+                    System.out.println("Returning to main menu...");
+                    break;
+                case 1:
+                	SparePartService.addPart(sc);
+                    break;
+                case 2:
+                    break;
+                case 3:
+                	System.out.print(" ");
+                    break;
+                case 4:System.out.print(" ");
+                    
+                    break;
+                case 5:
+                	System.out.print(" ");
+                    
+                    break;
+                default:
+                    System.out.println(" ");
+                    break;
+            }
+        } while (choice != 0);
+
+    }
 
 	private static void todaysBusinessMenu(Scanner sc) {
 		// TODO Auto-generated method stub

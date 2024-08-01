@@ -1,6 +1,8 @@
 package com.sunbeam.entities;
 
-public class VehicleModel{
+import java.io.Serializable;
+
+public class VehicleModel implements Serializable{
 
 	private int id;
 	private String manufacturer;

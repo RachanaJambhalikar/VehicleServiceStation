@@ -69,9 +69,10 @@ public class ServiceStation {
         partList.add(new SparePart(7, "timing belt", "Keeps the engine intake and exhaust valves open and close simultaneously in time with the pistons", 8000));
         partList.add(new SparePart(8, "seat", "Known as the saddle, is the part of the bike that the rider sits on.", 1000));
         storePartDetails();
+        loadPartDetails();
     }
 
-    private void storePartDetails() {
+    public void storePartDetails() {
     	FileOutputStream fout = null;
     	ObjectOutputStream oout = null;
     	
@@ -94,7 +95,7 @@ public class ServiceStation {
        } 	
     }
 
-    private void loadPartDetails() {
+    public void loadPartDetails() {
     	FileInputStream fin = null;
     	ObjectInputStream oin = null;
     	
@@ -132,9 +133,10 @@ public class ServiceStation {
         vehicleModelsList.add(new VehicleModel(9, "TVS", "apache160"));
         vehicleModelsList.add(new VehicleModel(10, "Bajaj", "pulsar"));
         storeVehicleModelDetails();
+        loadVehicleModelDetails();
     }
 
-    private void storeVehicleModelDetails() {
+    public void storeVehicleModelDetails() {
         try (FileOutputStream fout = new FileOutputStream(VehicleFilePath);
              ObjectOutputStream oout = new ObjectOutputStream(fout);) {
         	
@@ -145,13 +147,13 @@ public class ServiceStation {
         }
     }
 
-    private void loadVehicleModelDetails() {
+    public void loadVehicleModelDetails() {
     	
         try (FileInputStream fin = new FileInputStream(VehicleFilePath);
              ObjectInputStream oin = new ObjectInputStream(fin)) {
         	
             vehicleModelsList = (HashSet<VehicleModel>) oin.readObject();
-            System.out.println("Model loaded successfully");
+            System.out.println("Vehicle Model loaded successfully");
             
         } catch (FileNotFoundException e) {
             e.printStackTrace();

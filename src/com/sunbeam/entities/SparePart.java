@@ -1,6 +1,8 @@
 package com.sunbeam.entities;
 
-public class SparePart{
+import java.io.Serializable;
+
+public class SparePart implements Serializable{
 	    private int id;
 	    private String name;
 	    private String desc;

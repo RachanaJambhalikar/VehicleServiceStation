@@ -4,73 +4,63 @@ import com.sunbeam.entities.Customer;
 import com.sunbeam.entities.ServiceStation;
 import com.sunbeam.entities.Vehicle;
 import com.sunbeam.entities.VehicleModel;
+
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Scanner;
 
 public class VehicleService {
 	
     public static void inputVehicle(Vehicle vehicle, Scanner sc) {
+    	ServiceStation.servicestation.loadVehicleModelDetails();
     	
         System.out.println("Enter Vehicle Number: ");
         vehicle.setVehicleNumber(sc.next());
   
         System.out.println("Select Vehicle model and manufacturer: ");
-        HashSet<VehicleModel>vehicleModels=ServiceStation.servicestation.getVehicleModelsList();
-        for(VehicleModel vehicleModel:vehicleModels) 
-        {
-        	System.out.println(vehicleModel);
+        
+        HashSet<VehicleModel>vehicleModelsList=ServiceStation.servicestation.getVehicleModelsList();
+        VehicleModel[] vehicleModels = vehicleModelsList.toArray(new VehicleModel[vehicleModelsList.size()]);
+        
+        for (int i = 0; i < vehicleModels.length; i++) {
+            System.out.println((i + 1) + " " + vehicleModels[i]);
         }
         
-        VehicleModel[] vehicleModel = vehicleModels.toArray(new VehicleModel[vehicleModels.size()]);
-      for(VehicleModel vm1: vehicleModel)
-    	  System.out.println(vm1);
-      vehicle.setVehicleModel(vehicleModel[sc.nextInt()-1]);
+        System.out.print("Enter your choice : ");
+        int modelIndex = sc.nextInt() - 1;
+
+        if (modelIndex >= 0 && modelIndex < vehicleModels.length) {
+            vehicle.setVehicleModel(vehicleModels[modelIndex]);
+        
+        }
     }
     
-    public static void addVehicleToCustomer(String mobileNumber, Vehicle vehicle, Scanner sc) {
-      CustomerService customerService = new CustomerService();
-      Customer customer=customerService.findCustomerByMobileNumber(mobileNumber);
-      
-      System.out.println("Enter Vehicle number: ");
-      vehicle.setVehicleNumber(sc.next());
-      
-      
-      
-      
-      
-      
-      
-      
-    }
-      
-    public static void displayAllVehicles(Customer customer) {
+    public static void addVehicle(String mobileNumber, Vehicle vehicle, Scanner sc) {
+        CustomerService customerService = new CustomerService();
+        Customer customer = customerService.findCustomerByMobileNumber(mobileNumber);
+
         if (customer != null) {
-            HashSet<Vehicle> vehicles = new HashSet<>(customer.getVehicles().values());
-            for (Vehicle vehicle : vehicles) {
-                System.out.println(vehicle);
-            }
+            customer.getVehicles().put(vehicle.getVehicleNumber(), vehicle);
+            ServiceStation.servicestation.storeVehicleModelDetails();
+
+            System.out.println("Vehicle added successfully.");
         } else {
-            System.out.println("No vehicles found.");
+           
         }
     }
 
-    public static Vehicle findVehicleByVNumber(Customer customer, String vehicleNumber) {
-        if (customer != null) {
-            return customer.getVehicles().get(vehicleNumber);
-        }
-        return null;
+    public static HashMap<String, Vehicle> getVehicles(String mobileNumber) {
+        CustomerService customerService = new CustomerService();
+        Customer customer = customerService.findCustomerByMobileNumber(mobileNumber);
+        return customer != null ? customer.getVehicles() : null;
+    }
+
+    public static void displayAllVehicles() {
+
     }
 
     public static void editVehicle(Customer customer, String vehicleNumber, Scanner sc) {
-        Vehicle vehicle = findVehicleByVNumber(customer, vehicleNumber);
-        if (vehicle != null) {
-            System.out.println("Editing vehicle: " + vehicle);
-            inputVehicle(vehicle, sc);
-            customer.getVehicles().put(vehicleNumber, vehicle);
-            System.out.println("Vehicle updated successfully.");
-        } else {
-            System.out.println("Vehicle not found.");
-        }
+      
     }
 
     public static void deleteVehicle(Customer customer, String vehicleNumber) {

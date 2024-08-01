@@ -1,8 +1,9 @@
 package com.sunbeam.entities;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class Customer {
+public class Customer implements Serializable{
 
 	private String name;
 	private String address;
